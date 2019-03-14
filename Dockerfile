@@ -1,2 +1,3 @@
 FROM dixaba/ubiquitous-octo-telegram:21
-CMD ["bash", "-c", "cd /project/build && qmake /project/source && make -j $(nproc)" ]
+COPY run.sh /tmp/run.sh
+CMD ["bash", "run.sh"]
