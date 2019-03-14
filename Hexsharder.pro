@@ -11,10 +11,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+    requestwrapper.cpp \
+    lootmodel.cpp
 
 HEADERS += \
         mainwindow.h \
-
+    requestwrapper.h \
+    lootmodel.h
 
 FORMS += \
         mainwindow.ui
