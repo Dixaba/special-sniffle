@@ -28,7 +28,7 @@ steps:
 
 - script: awk -v N=2 '/##/&&--N<=0{exit}{print}' changelog.md > $(Build.ArtifactStagingDirectory)/notes
   workingDirectory: '$(Build.SourcesDirectory)'
-  displayName: 'tree view'
+  displayName: 'Changelog'
 
 - task: GitHubRelease@0
   displayName: 'GitHub release'
