@@ -26,7 +26,7 @@ steps:
      $(Build.ArtifactStagingDirectory):/project/build
     runInBackground: false
 
-- script: tree
+- script: ls -R
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'tree view'
 
