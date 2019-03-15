@@ -1,0 +1,62 @@
+pool:
+  vmImage: Hosted Ubuntu 1604
+steps:
+- task: Docker@1
+  displayName: 'Run an image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    command: 'Run an image'
+    imageName: 'hello-world'
+    runInBackground: false
+  enabled: false
+
+- task: Docker@1
+  displayName: 'Build an image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerFile: Dockerfile
+  enabled: false
+
+- task: Docker@1
+  displayName: 'Run an image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: 'Docker Hub'
+    command: 'Run an image'
+    imageName: 'dixaba/qt5-gcc-cross'
+    volumes: |
+     $(Build.SourcesDirectory):/project/source
+     $(Build.ArtifactStagingDirectory):/project/build
+    runInBackground: false
+
+- task: ArchiveFiles@2
+  displayName: 'Archive $(Build.ArtifactStagingDirectory)'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+
+- script: |
+   pwd
+   ls -l
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Command Line Script'
+
+- task: FtpUpload@1
+  displayName: 'FTP Upload: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    serverEndpoint: ftp
+    rootDirectory: '$(Build.ArtifactStagingDirectory)'
+    remoteDirectory: /htdocs/abaa
+  enabled: false
+
+- task: GitHubRelease@0
+  displayName: 'GitHub release (create)'
+  inputs:
+    gitHubConnection: 'github connection 1'
+    repositoryName: 'Dixaba/special-sniffle'
+    tagSource: manual
+    tag: '$(Build.BuildId)'
+    title: Yaay
+    releaseNotesSource: input
+    releaseNotes: 'Automated build'
+    assets: '$(Build.ArtifactStagingDirectory)/*.zip'
+
