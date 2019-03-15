@@ -1,0 +1,50 @@
+name: 'Testt'
+
+trigger:
+  tags:
+    include:
+    - v*
+  branches:
+    exclude:
+    - master  
+
+pr: none
+
+pool:
+  vmImage: ubuntu-16.04
+
+steps:
+- task: Docker@1
+  displayName: 'Run build image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: 'Docker Hub'
+    command: 'Run an image'
+    imageName: 'dixaba/qt5-gcc-cross'
+    volumes: |
+     $(Build.SourcesDirectory):/project/source
+     $(Build.ArtifactStagingDirectory):/project/build
+    runInBackground: false
+
+- script: ls -R
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'tree view'
+
+- task: ArchiveFiles@2
+  displayName: 'Archive builds'
+  inputs:
+    includeRootFolder: false
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Release.zip'
+    archiveType: 'zip'
+  enabled: false
+
+- task: GitHubRelease@0
+  displayName: 'GitHub release'
+  inputs:
+    gitHubConnection: 'github connection 1'
+    repositoryName: 'Dixaba/special-sniffle'
+    title: Yaay
+    releaseNotesSource: input
+    releaseNotes: 'Automated build'
+    assets: '$(Build.ArtifactStagingDirectory)/release/*.exe'
