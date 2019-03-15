@@ -37,6 +37,7 @@ steps:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
     archiveFile: '$(Build.ArtifactStagingDirectory)/Release.zip'
     archiveType: 'zip'
+  enabled: false
 
 - task: GitHubRelease@0
   displayName: 'GitHub release'
@@ -46,4 +47,4 @@ steps:
     title: Yaay
     releaseNotesSource: input
     releaseNotes: 'Automated build'
-    assets: '$(Build.ArtifactStagingDirectory)/Release.zip'
+    assets: '$(Build.ArtifactStagingDirectory)/release/*.exe'
