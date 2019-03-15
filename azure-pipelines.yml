@@ -1,10 +1,13 @@
+name: 'Testt'
+
 trigger:
   tags:
     include:
     - v*
   branches:
     exclude:
-    - master
+    - master  
+
 pr: none
 
 pool:
@@ -44,4 +47,3 @@ steps:
     releaseNotesSource: input
     releaseNotes: 'Automated build'
     assets: '$(Build.ArtifactStagingDirectory)/Release.zip'
-
