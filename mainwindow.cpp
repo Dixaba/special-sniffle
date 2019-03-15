@@ -26,7 +26,6 @@ void MainWindow::waitLeague()
   if (r.begin())
     {
       startTimer->stop();
-      ui->label->setText("Успех!!1");
     }
 }
 
@@ -63,7 +62,6 @@ void MainWindow::processResponse(QByteArray *response)
     {
       QPixmap pic;
       pic.loadFromData(*response);
-      ui->label_2->setPixmap(pic);
     }
 
   if (isLoot)
