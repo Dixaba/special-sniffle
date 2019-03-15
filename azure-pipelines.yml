@@ -30,21 +30,12 @@ steps:
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'tree view'
 
-- task: ArchiveFiles@2
-  displayName: 'Archive builds'
-  inputs:
-    includeRootFolder: false
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/Release.zip'
-    archiveType: 'zip'
-  enabled: false
-
 - task: GitHubRelease@0
   displayName: 'GitHub release'
   inputs:
     gitHubConnection: 'github connection 1'
     repositoryName: 'Dixaba/special-sniffle'
     title: Yaay
-    releaseNotesSource: input
-    releaseNotes: 'Automated build'
+    releaseNotesSource: file
+    releaseNotesFile: '$(Build.ArtifactStagingDirectory)/notes'
     assets: '$(Build.ArtifactStagingDirectory)/release/*.exe'
