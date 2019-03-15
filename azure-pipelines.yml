@@ -26,8 +26,8 @@ steps:
      $(Build.ArtifactStagingDirectory):/project/build
     runInBackground: false
 
-- script: ls -R
-  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+- script: awk -v N=2 '/##/&&--N<=0{exit}{print}' changelog.md > $(Build.ArtifactStagingDirectory)/notes
+  workingDirectory: '$(Build.SourcesDirectory)'
   displayName: 'tree view'
 
 - task: GitHubRelease@0
