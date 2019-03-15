@@ -1,4 +1,4 @@
-name: 'Testt'
+name: $(SourceBranchName)-$(Date:yyyy.MM.dd)$(Rev:.r)
 
 trigger:
   tags:
