@@ -35,7 +35,6 @@ steps:
   inputs:
     gitHubConnection: 'github connection 1'
     repositoryName: 'Dixaba/special-sniffle'
-    title: Yaay
-    releaseNotesSource: file
     releaseNotesFile: '$(Build.ArtifactStagingDirectory)/notes'
     assets: '$(Build.ArtifactStagingDirectory)/release/*.exe'
+    addChangeLog: false
